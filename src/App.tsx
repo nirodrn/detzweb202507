@@ -19,7 +19,13 @@ const RefundPolicy = React.lazy(() => import('./pages/legal/RefundPolicy'));
 const GetStarted = React.lazy(() => import('./pages/GetStarted'));
 const Services = React.lazy(() => import('./pages/Services'));
 const SpecialOffers = React.lazy(() => import('./pages/SpecialOffers'));
-const SoftwareOffers = React.lazy(() => import('./pages/SoftwareOffers'));
+
+// Loading component
+const LoadingSpinner = () => (
+  <div className="flex justify-center items-center h-96">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+);
 
 // Component to handle scroll restoration
 function ScrollToTop() {
@@ -47,7 +53,7 @@ function App() {
           <Navbar />
           <main className="flex-grow">
             <PageTransition>
-              <React.Suspense fallback={<div className="flex justify-center items-center h-96"><span className="text-lg">Loading...</span></div>}>
+              <React.Suspense fallback={<LoadingSpinner />}>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/get-started" element={<GetStarted />} />
@@ -59,10 +65,11 @@ function App() {
                   <Route path="/careers" element={<Careers />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/special-offers" element={<SpecialOffers />} />
-                  <Route path="/software-offers" element={<SoftwareOffers />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/refund-policy" element={<RefundPolicy />} />
+                  {/* Redirect old software-offers route */}
+                  <Route path="/software-offers" element={<SpecialOffers />} />
                 </Routes>
               </React.Suspense>
             </PageTransition>
